@@ -1,0 +1,84 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# NOTE Path to oh-my-zsh.
+export ZSH="$HOME/.oh-my-zsh"
+
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Update omz automatically without asking
+zstyle ':omz:update' mode disabled      
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS="true"
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Enable command auto-correction.
+ENABLE_CORRECTION="true"
+
+# ANCHOR Plugins
+plugins=(
+	zsh-autosuggestions
+	zsh-syntax-highlighting
+	zsh-history-substring-search
+)
+
+# NOTE Plugin Settings
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#4D504C,underline"
+
+source $ZSH/oh-my-zsh.sh
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='nano'
+else
+  export EDITOR='code'
+fi
+
+# ANCHOR Aliases
+alias cz="chezmoi"
+alias g="git"
+
+# NOTE Print a small fortune cookie on start-up.
+fortune -s | cowsay
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# NOTE 1Password SSH Agent in WSL 
+{{ if eq .chezmoi.os "linux" }}
+{{   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+# Configure ssh forwarding
+export SSH_AUTH_SOCK=$HOME/.ssh/agent.sock
+# need `ps -ww` to get non-truncated command for matching
+# use square brackets to generate a regex match for the process we want but that doesn't match the grep command running it!
+ALREADY_RUNNING=$(ps -auxww | grep -q "[n]piperelay.exe -ei -s //./pipe/openssh-ssh-agent"; echo $?)
+if [[ $ALREADY_RUNNING != "0" ]]; then
+    if [[ -S $SSH_AUTH_SOCK ]]; then
+        # not expecting the socket to exist as the forwarding command isn't running (http://www.tldp.org/LDP/abs/html/fto.html)
+        echo "removing previous socket..."
+        rm $SSH_AUTH_SOCK
+    fi
+    echo "Starting SSH-Agent relay..."
+    # setsid to force new session to keep running
+    # set socat to listen on $SSH_AUTH_SOCK and forward to npiperelay which then forwards to openssh-ssh-agent on windows
+    (setsid socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork &) >/dev/null 2>&1
+fi
+{{   end }}
+{{ end }}

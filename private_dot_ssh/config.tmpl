@@ -1,0 +1,18 @@
+Host {{ onepasswordRead "op://Secrets/Hammerhead/Secrets/Local Static Address" }}
+  Port {{ onepasswordRead "op://Secrets/Gitea/Secrets/Local SSH Port" }}
+{{ if eq .chezmoi.os "windows" }}
+Host {{ onepasswordRead "op://Secrets/Gitea/Secrets/Forward SSH Domain" }}
+  ProxyCommand cloudflared access ssh --hostname %h
+{{ end }}
+
+{{ if eq .chezmoi.os "darwin" }}
+Host {{ onepasswordRead "op://Secrets/Gitea/Secrets/Forward SSH Domain" }}
+	ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h
+Host *
+	IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+{{ end }}
+
+{{ if eq .chezmoi.os "linux" }}
+Host *
+  IdentityAgent ~/.1password/agent.sock
+{{ end }}
