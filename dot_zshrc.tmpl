@@ -18,7 +18,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # HYPHEN_INSENSITIVE="true"
 
 # Update omz automatically without asking
-zstyle ':omz:update' mode disabled      
+zstyle ':omz:update' mode disabled
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
@@ -40,8 +40,6 @@ plugins=(
 )
 
 # NOTE Plugin Settings
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#4D504C,underline"
-
 source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
@@ -61,7 +59,7 @@ fortune -s | cowsay
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# NOTE 1Password SSH Agent in WSL 
+# NOTE 1Password SSH Agent in WSL
 {{ if eq .chezmoi.os "linux" }}
 {{   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 # Configure ssh forwarding
@@ -81,4 +79,8 @@ if [[ $ALREADY_RUNNING != "0" ]]; then
     (setsid socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork &) >/dev/null 2>&1
 fi
 {{   end }}
+{{ end }}
+
+{{ if eq .chezmoi.os "darwin" }}
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 {{ end }}
