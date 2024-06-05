@@ -1,0 +1,7 @@
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+  --color=fg:-1,fg+:#839496,bg:-1,bg+:#073642
+  --color=hl:#268bd2,hl+:#2aa198,info:#afaf87,marker:#859900
+  --color=prompt:#cb4b16,spinner:#6c71c4,pointer:#6c71c4,header:#87afaf
+  --color=border:#839496,label:#aeaeae,query:#d9d9d9
+  --preview-window="border-rounded" --prompt="» "
+  --marker=">" --pointer="◆" --separator="─" --scrollbar="│"'

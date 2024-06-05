@@ -1,0 +1,15 @@
+[data]
+    name = "Tyler Nguyen"
+    email = "{{ onepasswordRead "op://Private/Tyler Nguyen/Identification/Public Email" }}"
+
+[edit]
+    command = "code"
+    args = ["--wait"]
+
+[diff]
+    command = "code"
+    args = ["--wait", "--diff", "$LOCAL", "$REMOTE"]
+
+[merge]
+    command = "code"
+    args = ["--wait", "$MERGED"]

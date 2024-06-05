@@ -1,0 +1,30 @@
+# ALERT `zimfw install/uninstall` after modifications.
+
+# MODULES
+
+zmodule environment # Sets sane Zsh built-in environment options.
+zmodule input # Applies correct bindkeys for input events.
+zmodule termtitle # Sets a custom terminal title.
+zmodule utility # Utility aliases and functions. Adds colour to ls, grep and less.
+
+# PROMPT
+
+zmodule romkatv/powerlevel10k --use degit
+
+# COMPLETION
+
+#zmodule zsh-users/zsh-completions --fpath src # Additional completion definitions for Zsh.
+
+# NOTE Completion must be sourced after all modules that add completion definitions.
+zmodule completion # Enables and configures smart and extensive tab completion.
+
+zmodule Aloxaf/fzf-tab #Replace zsh's default completion selection menu with fzf
+
+# Modules that must be initialized last
+
+# NOTE zsh-users/zsh-history-substring-search must be sourced after zsh-users/zsh-syntax-highlighting
+#zmodule zsh-users/zsh-history-substring-search # Fish-like history search (up arrow) for Zsh.
+zmodule zsh-users/zsh-autosuggestions # Fish-like autosuggestions for Zsh.
+# zsh-users/zsh-syntax-highlighting must be sourced after completion
+# LINK https://github.com/zsh-users/zsh-syntax-highlighting#why-must-zsh-syntax-highlightingzsh-be-sourced-at-the-end-of-the-zshrc-file
+zmodule zsh-users/zsh-syntax-highlighting # Fish-like syntax highlighting for Zsh.
