@@ -7,9 +7,13 @@
     args = ["--wait"]
 
 [diff]
-    command = "code"
-    args = ["--wait", "--diff", "$LOCAL", "$REMOTE"]
+    tool = default-difftool
+
+[difftool "default-difftool"]
+    cmd = code --wait --diff $LOCAL $REMOTE
 
 [merge]
-    command = "code"
-    args = ["--wait", "$MERGED"]
+    tool = code
+
+[mergetool "code"]
+    cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
