@@ -6,16 +6,16 @@
 {{ end }}
 
 [diff]
-	tool = vscode
+    tool = default-difftool
 
-[difftool "vscode"]
-	cmd = code --wait --diff $LOCAL $REMOTE
+[difftool "default-difftool"]
+    cmd = code --wait --diff $LOCAL $REMOTE
 
 [merge]
-	tool = vscode
+    tool = code
 
-[mergetool "vscode"]
-	cmd = code --wait $MERGED
+[mergetool "code"]
+    cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 
 [user]
 	name = Tyler Nguyen
