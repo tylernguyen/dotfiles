@@ -1,0 +1,61 @@
+[core]
+	editor = code --wait
+	ignorecase = false
+{{ if eq .chezmoi.os "windows" }}
+	sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
+{{ end }}
+
+[diff]
+    tool = default-difftool
+
+[difftool "default-difftool"]
+    cmd = code --wait --diff $LOCAL $REMOTE
+
+[merge]
+    tool = code
+
+[mergetool "code"]
+    cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
+
+[user]
+	name = Tyler Nguyen
+	email = human@tylernguyen.email
+
+[includeIf "gitdir:src/tylernguyen@GitHub/"]
+	path = ./.tylernguyen@GitHub.gitconfig
+
+[includeIf "gitdir:src/tylernguyen.codes/"]
+	path = ./.tylernguyen.codes.gitconfig
+
+[gpg]
+	format = ssh
+{{ if eq .chezmoi.os "windows" }}
+	program = c:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe
+{{ end }}
+
+[gpg "ssh"]
+{{ if eq .chezmoi.os "windows" }}
+	program = "C:/Program Files/1Password/app/8/op-ssh-sign.exe"
+{{ end }}
+{{ if eq .chezmoi.os "darwin" }}
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+{{ end }}
+{{ if eq .chezmoi.os "linux" }}
+	program = "/opt/1Password/op-ssh-sign"
+{{ end }}
+
+[commit]
+	gpgSign = true
+
+[tag]
+	gpgSign = true
+	forceSignAnnotated = true
+
+[init]
+	defaultBranch = main
+
+[alias]
+	last = log -1 HEAD --stat
+
+[pull]
+	rebase = true
