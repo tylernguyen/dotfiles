@@ -9,8 +9,6 @@ zmodule utility # Utility aliases and functions. Adds colour to ls, grep and les
 
 # PROMPT
 
-zmodule romkatv/powerlevel10k --use degit
-
 # COMPLETION
 
 #zmodule zsh-users/zsh-completions --fpath src # Additional completion definitions for Zsh.
