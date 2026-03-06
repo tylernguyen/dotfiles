@@ -8,5 +8,5 @@ Host *
   IdentityAgent ~/.1password/agent.sock
 {{ end }}
 
-Host {{ onepasswordRead "op://Secrets/Hammerhead/Secrets/Local Static Address" }}
-  Port {{ onepasswordRead "op://Secrets/Forgejo/Secrets/Local SSH Port" }}
+Host {{ onepasswordRead "op://Private/Hammerhead/Secrets/Local Static Address" }}
+  Port {{ onepasswordRead "op://Private/Forgejo/Secrets/Local SSH Port" }}
