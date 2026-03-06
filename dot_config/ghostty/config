@@ -1,0 +1,6 @@
+theme = Solarized Dark Patched
+font-family = Berkeley Mono Variable
+font-size = 14
+keybind = global:command+grave_accent=toggle_quick_terminal
+quick-terminal-animation-duration = .05
+quick-terminal-size = 50%, 70%
